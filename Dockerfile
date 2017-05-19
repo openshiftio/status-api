@@ -1,22 +1,21 @@
 FROM registry.centos.org/kbsingh/openshift-nginx:latest
 
+EXPOSE 8080
+WORKDIR /opt/status-api
+
 USER root
 
-RUN yum -y install python-pip python-devel gcc git &&\
-    cd /opt &&\
-    git clone https://github.com/syamgk/status-api &&\
-    cd status-api && pip install -r requirements.txt &&\
-    yum -y remove python-devel git; yum clean all
+ADD . /opt/status-api
+RUN yum -y install python-pip python-devel gcc &&\
+    pip install -r requirements.txt &&\
+    cp -r root/* / &&\
+    cp scripts/run.sh /usr/bin/ &&\
+    yum -y remove python-devel; yum clean all
 
-ADD root /
-
-RUN chown -R 1001:0 /opt/status-api  &&\
-    chmod -R ug+rw /opt/status-api &&\
-    chmod 777 /run.sh
-
+RUN chgrp -R 0 /opt/status-api &&\
+    chmod -R g+rwX /opt/status-api &&\
+    chmod +x /usr/bin/run.sh
 
 USER 1001
-WORKDIR /opt/status-api
-EXPOSE 8080
 
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/usr/bin/run.sh"]
