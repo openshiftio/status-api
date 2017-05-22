@@ -7,9 +7,10 @@ app = Flask(__name__)
 api = Api(app)
 
 hostgroups ={}
-num_of_hostgroups = int(environ['NUM_OF_HOSTGROUPS'])
-for x in xrange(1, num_of_hostgroups+1):
-	value = environ['HG'+str(x)].split(":")
+hostgroups_env = environ['HOSTGROUPS']
+hostgroups_split = hostgroups_env.split(";")
+for hg in hostgroups_split:
+	value = hg.split(":")
 	hostgroups[value[0]] = literal_eval(value[1])
 
 class Show_Status(Resource):
