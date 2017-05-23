@@ -38,7 +38,7 @@ objects:
           service: zabbix-status-api
       spec:
         containers:
-        - image: registry.centos.org/status-api/zabbix-status-api:${IMAGE_TAG}
+        - image: registry.devshift.net/openshiftio/zabbix-status-api:${IMAGE_TAG}
           imagePullPolicy: Always
           name: zabbix-status-api
           ports:
