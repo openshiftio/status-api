@@ -1,14 +1,14 @@
 # status-api
 
-ENVIRONMENT VARIABLES:
 
-ZABBIX_URL : \<url to access zabbix instance\>
+## Environment variables:
 
-ZABBIX_USER : \<zabbix username\>
+```
+ZABBIX_URL : <url to access zabbix instance>
 
-ZABBIX_PASSWORD : \< zabbix password\>
+ZABBIX_USER : <zabbix username>
 
-NUM_OF_HOSTGROUPS : \<number of hostgroups\>
+ZABBIX_PASSWORD : < zabbix password>
 
-
-HG\<n\> : \<hostgroupnsme\> : [\<hostid\>, \<hostid\>,..]
+HOSTGROUPS : <hostgroupnsme> : [<hostid>, <hostid>,..];<hostgroupnsme> : [<hostid>, <hostid>,..];...
+```
