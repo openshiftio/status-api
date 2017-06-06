@@ -23,7 +23,7 @@ service docker start
 # Build the app
 
 IMAGE="zabbix-status-api"
-REPOSITORY="registry.devshift.net/openshiftio/"
+REPOSITORY="registry.devshift.net/openshiftio"
 
 docker build -t ${IMAGE} -f Dockerfile .
 
