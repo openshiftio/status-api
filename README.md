@@ -1,5 +1,4 @@
-# status-api
-
+# Zabbix Status API
 
 ## Environment variables:
 
