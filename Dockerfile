@@ -1,4 +1,5 @@
 FROM registry.centos.org/kbsingh/openshift-nginx:latest
+MAINTAINER Vasek Pavlin <vasek@redhat.com>
 
 EXPOSE 8080
 WORKDIR /opt/status-api
