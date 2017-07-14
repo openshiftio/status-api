@@ -11,3 +11,5 @@ ZABBIX_PASSWORD : < zabbix password>
 
 HOSTGROUPS : <hostgroupnsme> : [<hostid>, <hostid>,..];<hostgroupnsme> : [<hostid>, <hostid>,..];...
 ```
+
+
