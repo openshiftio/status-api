@@ -1,6 +1,6 @@
 # Zabbix Status API
 
-## Environment variables:
+## Environment variables used in container:
 
 ```
 ZABBIX_URL : <url to access zabbix instance>
