@@ -30,7 +30,11 @@ docker build -t ${IMAGE} -f Dockerfile .
 
 TAG=$(echo $GIT_COMMIT | cut -c1-6)
 
-docker login -u ${DEVSHIFT_USERNAME} -p ${DEVSHIFT_PASSWORD} ${REGISTRY}
+if [ -n "${DEVSHIFT_USERNAME}" -a -n "${DEVSHIFT_PASSWORD}" ]; then
+  docker login -u ${DEVSHIFT_USERNAME} -p ${DEVSHIFT_PASSWORD} ${REGISTRY}
+else
+  echo "Could not login, missing credentials for the registry"
+fi
 
 docker tag ${IMAGE} ${REPOSITORY}/${IMAGE}:$TAG && \
 docker push ${REPOSITORY}/${IMAGE}:$TAG && \
