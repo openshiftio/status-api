@@ -7,7 +7,7 @@ set -x
 set -e
 
 # Export needed vars
-for var in GIT_COMMIT DEVSHIFT_USERNAME DEVSHIFT_PASSWORD; do
+for var in GIT_COMMIT DEVSHIFT_USERNAME DEVSHIFT_PASSWORD DEVSHIFT_TAG_LEN; do
   export $(grep ${var} jenkins-env | xargs)
 done
 export BUILD_TIMESTAMP=`date -u +%Y-%m-%dT%H:%M:%S`+00:00
@@ -28,7 +28,7 @@ REPOSITORY="${REGISTRY}/openshiftio"
 
 docker build -t ${IMAGE} -f Dockerfile .
 
-TAG=$(echo $GIT_COMMIT | cut -c1-6)
+TAG=${DEVSHIFT_TAG_LEN}
 
 if [ -n "${DEVSHIFT_USERNAME}" -a -n "${DEVSHIFT_PASSWORD}" ]; then
   docker login -u ${DEVSHIFT_USERNAME} -p ${DEVSHIFT_PASSWORD} ${REGISTRY}
