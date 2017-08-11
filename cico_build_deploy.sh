@@ -28,7 +28,7 @@ REPOSITORY="${REGISTRY}/openshiftio"
 
 docker build -t ${IMAGE} -f Dockerfile .
 
-TAG=${DEVSHIFT_TAG_LEN}
+TAG=$(echo $GIT_COMMIT | cut -c1-${DEVSHIFT_TAG_LEN})
 
 if [ -n "${DEVSHIFT_USERNAME}" -a -n "${DEVSHIFT_PASSWORD}" ]; then
   docker login -u ${DEVSHIFT_USERNAME} -p ${DEVSHIFT_PASSWORD} ${REGISTRY}
