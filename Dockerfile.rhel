@@ -1,0 +1,21 @@
+FROM prod.registry.devshift.net/osio-prod/base/status-api:latest
+LABEL maintainer "Devtools <devtools@redhat.com>"
+LABEL author "Devtools <devtools@redhat.com>"
+
+EXPOSE 8080
+WORKDIR /opt/status-api
+
+USER root
+
+ADD . /opt/status-api
+
+RUN pip install -r requirements.txt && \
+    cp -r root/* / && \
+    cp scripts/run.sh /usr/bin/ && \
+    chgrp -R 0 /opt/status-api && \
+    chmod -R g+rwX /opt/status-api && \
+    chmod +x /usr/bin/run.sh
+
+USER 1001
+
+ENTRYPOINT ["/usr/bin/run.sh"]
