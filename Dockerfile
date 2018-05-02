@@ -17,6 +17,10 @@ RUN chgrp -R 0 /opt/status-api &&\
     chmod -R g+rwX /opt/status-api &&\
     chmod +x /usr/bin/run.sh
 
+# There is a bug in py-zabbix==1.1.0 that doesn't handle properly urllib2 with
+# self-signed certs. This patch will force it to work with unverified SSLs.
+RUN sed -i 's/2, 7, 9/2, 7, 5/g' /usr/lib/python2.7/site-packages/pyzabbix/api.py
+
 USER 1001
 
 ENTRYPOINT ["/usr/bin/run.sh"]
