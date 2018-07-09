@@ -134,6 +134,6 @@ objects:
   status: {}
 parameters:
 - name: IMAGE
-  value: registry.devshift.net/openshiftio/zabbix-status-api
+  value: quay.io/openshiftio/rhel-openshiftio-zabbix-status-api
 - name: IMAGE_TAG
   value: latest

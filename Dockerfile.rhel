@@ -1,4 +1,4 @@
-FROM prod.registry.devshift.net/osio-prod/base/status-api:latest
+FROM quay.io/openshiftio/rhel-base-status-api:latest
 LABEL maintainer "Devtools <devtools@redhat.com>"
 LABEL author "Devtools <devtools@redhat.com>"
 

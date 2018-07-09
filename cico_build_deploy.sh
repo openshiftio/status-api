@@ -7,10 +7,7 @@ set -x
 set -e
 
 # Export needed vars
-for var in GIT_COMMIT DEVSHIFT_USERNAME DEVSHIFT_PASSWORD DEVSHIFT_TAG_LEN; do
-  export $(grep ${var} jenkins-env | xargs)
-done
-export BUILD_TIMESTAMP=`date -u +%Y-%m-%dT%H:%M:%S`+00:00
+eval "$(./env-toolkit load -f jenkins-env.json GIT_COMMIT QUAY_USERNAME QUAY_PASSWORD DEVSHIFT_TAG_LEN)"
 
 # We need to disable selinux for now, XXX
 /usr/sbin/setenforce 0 || :
@@ -22,19 +19,20 @@ service docker start
 
 # Build the app
 
-IMAGE="zabbix-status-api"
-REGISTRY="push.registry.devshift.net"
+IMAGE="openshiftio-zabbix-status-api"
+REGISTRY="quay.io"
 TAG=$(echo $GIT_COMMIT | cut -c1-${DEVSHIFT_TAG_LEN})
 
-if [ -n "${DEVSHIFT_USERNAME}" -a -n "${DEVSHIFT_PASSWORD}" ]; then
-  docker login -u ${DEVSHIFT_USERNAME} -p ${DEVSHIFT_PASSWORD} ${REGISTRY}
+if [ -n "${QUAY_USERNAME}" -a -n "${QUAY_PASSWORD}" ]; then
+  docker login -u ${QUAY_USERNAME} -p ${QUAY_PASSWORD} ${REGISTRY}
 else
   echo "Could not login, missing credentials for the registry"
+  exit 1
 fi
 
 if [ "$TARGET" = "rhel" ]; then
   DOCKERFILE="Dockerfile.rhel"
-  IMAGE_URL="${REGISTRY}/osio-prod/openshiftio/${IMAGE}"
+  IMAGE_URL="${REGISTRY}/openshiftio/rhel-${IMAGE}"
 else
   DOCKERFILE="Dockerfile.rhel"
   IMAGE_URL="${REGISTRY}/openshiftio/${IMAGE}"
